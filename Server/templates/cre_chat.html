@@ -1,19 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>创建群组</title>
-</head>
+{% extends "tch_base.html" %}
+{% block body %}
 
-<body>
-<h1>创建群组：</h1>
-<form method = 'post' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{uf.as_p}}
-    <input type="submit" value = "ok" />
-</form>
-<br>
-<a href="/login/">登陆</a>
-</body>
-</html>
+    <div style="margin-left: 37%;margin-top:5%;width: 400px;">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center;font-size: 30px;background-color:#c1e2b3;color:#FFFFFF;">
+                创建群组
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>群组名</label>
+                        <input class="form-control" type="text" name="name" required="required">
+                        <p class="help-block">请输入该群组名字 如"XX教学班"</p>
+                    </div>
+                    <div class="form-group">
+                        <label>教师名字</label>
+                        <input class="form-control"  name="teacher" type="text" required="required" value="{{ teacher_name }}">
+                        <p class="help-block">请输入创建群组的归属老师</p>
+                    </div>
+                    <div class="form-group">
+                        <label>输入密码</label>
+                        <input class="form-control"  name="passwd" type="password" required="required"/>
+                        <p class="help-block">输入教师用户密码</p>
+                    </div>
+                    <div class="form-group">
+                        <label>群组通知</label>
+                        <input class="form-control"  name="advise" type="text" required="required" value="无"/>
+{#                        <p class="help-block">Help text here.</p>#}
+                    </div>
+
+                    <button type="submit" class="btn btn-info" style="width: 170px;">创建群组 </button>
+                    <button  class="btn btn-info" style="margin-left:20px;width: 170px;" id = "button">返回</button>
+                </form>
+            </div>
+        </div>
+    </div>
+ <script src="/static/js/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function(){
+            var button = $("#button");
+            button.click(function(){
+                setTimeout('jumpurl()',1);
+            });
+        });
+        function jumpurl(){
+            location='/Teacher/handler/';
+        }
+    </script>
+{% endblock %}
+{#<form method="post" enctype="multipart/form-data">#}
+{#    <input type="hidden" name="csrfmiddlewaretoken" value="6A4y5Vh0f8KbYX3OUGmKpCNB8ujUGH2cDACnivnpPWdNeB6B8KUszAjzZdfLQi2T">#}
+{#    <p><label for="id_name">群组名:</label> <input id="id_name" maxlength="100" name="name" type="text" required=""></p>#}
+{#<p><label for="id_teacher">老师:</label> <input id="id_teacher" maxlength="100" name="teacher" type="text" required=""></p>#}
+{#<p><label for="id_passwd">密    码:</label> <input id="id_passwd" name="passwd" type="password" required=""></p>#}
+{#<p><label for="id_advise">通知:</label> <input id="id_advise" maxlength="100" name="advise" type="text" required=""></p>#}
+{#    <input type="submit" value="ok">#}
+{#</form>#}

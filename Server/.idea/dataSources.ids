@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="Django default" uuid="f78af408-95df-4e80-bb49-c78b92ec286e">
+    <database-info product="MySQL" version="5.6.24" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.40 ( Revision: 402933ef52cad9aa82624e80acbea46e3a701ce6 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="arri"/>
+    <table name="advise" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Sign" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="chats" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="teacher_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Advise_teacher_id_3e508f1c_fk_Teacher_id" columns="teacher_id" ref-table="teacher" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="arriver" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="std_name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="chats" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="qiandao_datetime" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="is_late" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="late_reason" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="std_name" unique="true" columns="std_name"/>
+    </table>
+    <table name="auth_group" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="80" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" table="auth_group_permissions" schema="" catalog="arri" columns="group_id"/>
+      <exported-key name="auth_user_groups_group_id_97559544_fk_auth_group_id" table="auth_user_groups" schema="" catalog="arri" columns="group_id"/>
+      <index name="name" unique="true" columns="name"/>
+    </table>
+    <table name="auth_group_permissions" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="permission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id" columns="permission_id" ref-table="auth_permission" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" columns="group_id" ref-table="auth_group" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="auth_group_permissions_group_id_0cd325b0_uniq" unique="true" columns="group_id,permission_id"/>
+      <index name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id" unique="false" columns="permission_id"/>
+    </table>
+    <table name="auth_permission" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="content_type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="codename" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_permissi_content_type_id_2f476e4b_fk_django_content_type_id" columns="content_type_id" ref-table="django_content_type" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id" table="auth_group_permissions" schema="" catalog="arri" columns="permission_id"/>
+      <exported-key name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id" table="auth_user_user_permissions" schema="" catalog="arri" columns="permission_id"/>
+      <index name="auth_permission_content_type_id_01ab375a_uniq" unique="true" columns="content_type_id,codename"/>
+    </table>
+    <table name="auth_user" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="password" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_login" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="is_superuser" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="username" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
+      <column name="first_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="254" scale="0" nullable="false" jdbcType="12"/>
+      <column name="is_staff" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="is_active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="date_joined" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" table="auth_user_groups" schema="" catalog="arri" columns="user_id"/>
+      <exported-key name="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" table="auth_user_user_permissions" schema="" catalog="arri" columns="user_id"/>
+      <exported-key name="django_admin_log_user_id_c564eba6_fk_auth_user_id" table="django_admin_log" schema="" catalog="arri" columns="user_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="auth_user_groups" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_user_groups_group_id_97559544_fk_auth_group_id" columns="group_id" ref-table="auth_group" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="auth_user_groups_user_id_94350c0c_uniq" unique="true" columns="user_id,group_id"/>
+      <index name="auth_user_groups_group_id_97559544_fk_auth_group_id" unique="false" columns="group_id"/>
+    </table>
+    <table name="auth_user_user_permissions" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="permission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id" columns="permission_id" ref-table="auth_permission" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="auth_user_user_permissions_user_id_14a6b632_uniq" unique="true" columns="user_id,permission_id"/>
+      <index name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id" unique="false" columns="permission_id"/>
+    </table>
+    <table name="chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="advise" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Teacher" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="Msg_chats_chats_id_012db816_fk_Chats_id" table="msg_chats" schema="" catalog="arri" columns="chats_id"/>
+      <exported-key name="Students_chats_chats_id_00052c8d_fk_Chats_id" table="students_chats" schema="" catalog="arri" columns="chats_id"/>
+      <exported-key name="Teacher_chats_chats_id_0e5e1c9b_fk_Chats_id" table="teacher_chats" schema="" catalog="arri" columns="chats_id"/>
+      <index name="name" unique="true" columns="name"/>
+    </table>
+    <table name="django_admin_log" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="action_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="object_id" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="object_repr" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="action_flag" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="change_message" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="content_type_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="django_admin__content_type_id_c4bce8eb_fk_django_content_type_id" columns="content_type_id" ref-table="django_content_type" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="django_admin_log_user_id_c564eba6_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="django_admin__content_type_id_c4bce8eb_fk_django_content_type_id" unique="false" columns="content_type_id"/>
+      <index name="django_admin_log_user_id_c564eba6_fk_auth_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="django_content_type" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="app_label" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="model" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_permissi_content_type_id_2f476e4b_fk_django_content_type_id" table="auth_permission" schema="" catalog="arri" columns="content_type_id"/>
+      <exported-key name="django_admin__content_type_id_c4bce8eb_fk_django_content_type_id" table="django_admin_log" schema="" catalog="arri" columns="content_type_id"/>
+      <index name="django_content_type_app_label_76bd3d3b_uniq" unique="true" columns="app_label,model"/>
+    </table>
+    <table name="django_migrations" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="app" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="applied" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="django_session" schema="" catalog="arri" type="TABLE">
+      <column name="session_key" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="session_data" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="expire_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="session_key"/>
+      <index name="django_session_de54fa62" unique="false" columns="expire_date"/>
+    </table>
+    <table name="msg" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="content" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="students_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Msg_students_id_8bf4293d_fk_Students_id" columns="students_id" ref-table="students" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="Msg_chats_msg_id_a8c00300_fk_Msg_id" table="msg_chats" schema="" catalog="arri" columns="msg_id"/>
+    </table>
+    <table name="msg_chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="msg_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chats_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Msg_chats_chats_id_012db816_fk_Chats_id" columns="chats_id" ref-table="chats" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="Msg_chats_msg_id_a8c00300_fk_Msg_id" columns="msg_id" ref-table="msg" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Msg_chats_msg_id_b2e935e0_uniq" unique="true" columns="msg_id,chats_id"/>
+      <index name="Msg_chats_chats_id_012db816_fk_Chats_id" unique="false" columns="chats_id"/>
+    </table>
+    <table name="students" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="passwd" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="std_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="Msg_students_id_8bf4293d_fk_Students_id" table="msg" schema="" catalog="arri" columns="students_id"/>
+      <exported-key name="Students_chats_students_id_1fc5155f_fk_Students_id" table="students_chats" schema="" catalog="arri" columns="students_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="students_chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="students_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chats_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Students_chats_chats_id_00052c8d_fk_Chats_id" columns="chats_id" ref-table="chats" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="Students_chats_students_id_1fc5155f_fk_Students_id" columns="students_id" ref-table="students" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Students_chats_students_id_45bd851d_uniq" unique="true" columns="students_id,chats_id"/>
+      <index name="Students_chats_chats_id_00052c8d_fk_Chats_id" unique="false" columns="chats_id"/>
+    </table>
+    <table name="teacher" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="passwd" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="Advise_teacher_id_3e508f1c_fk_Teacher_id" table="advise" schema="" catalog="arri" columns="teacher_id"/>
+      <exported-key name="Teacher_chats_teacher_id_9f2924b7_fk_Teacher_id" table="teacher_chats" schema="" catalog="arri" columns="teacher_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="teacher_chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="teacher_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chats_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Teacher_chats_chats_id_0e5e1c9b_fk_Chats_id" columns="chats_id" ref-table="chats" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="Teacher_chats_teacher_id_9f2924b7_fk_Teacher_id" columns="teacher_id" ref-table="teacher" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Teacher_chats_teacher_id_1273932e_uniq" unique="true" columns="teacher_id,chats_id"/>
+      <index name="Teacher_chats_chats_id_0e5e1c9b_fk_Chats_id" unique="false" columns="chats_id"/>
+    </table>
+  </data-source>
+  <data-source name="Django default2" uuid="9e348e1d-d5a8-4a20-a210-21d7b871aca6">
+    <database-info product="MySQL" version="5.6.24" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.40 ( Revision: 402933ef52cad9aa82624e80acbea46e3a701ce6 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="arri"/>
+    <table name="advise" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Sign" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="chats" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="teacher_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Advise_teacher_id_3e508f1c_fk_Teacher_id" columns="teacher_id" ref-table="teacher" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="arriver" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="std_name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="chats" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="qiandao_datetime" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="is_late" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="late_reason" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="std_name" unique="true" columns="std_name"/>
+    </table>
+    <table name="auth_group" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="80" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" table="auth_group_permissions" schema="" catalog="arri" columns="group_id"/>
+      <exported-key name="auth_user_groups_group_id_97559544_fk_auth_group_id" table="auth_user_groups" schema="" catalog="arri" columns="group_id"/>
+      <index name="name" unique="true" columns="name"/>
+    </table>
+    <table name="auth_group_permissions" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="permission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id" columns="permission_id" ref-table="auth_permission" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" columns="group_id" ref-table="auth_group" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="auth_group_permissions_group_id_0cd325b0_uniq" unique="true" columns="group_id,permission_id"/>
+      <index name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id" unique="false" columns="permission_id"/>
+    </table>
+    <table name="auth_permission" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="content_type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="codename" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_permissi_content_type_id_2f476e4b_fk_django_content_type_id" columns="content_type_id" ref-table="django_content_type" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="auth_group_permissi_permission_id_84c5c92e_fk_auth_permission_id" table="auth_group_permissions" schema="" catalog="arri" columns="permission_id"/>
+      <exported-key name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id" table="auth_user_user_permissions" schema="" catalog="arri" columns="permission_id"/>
+      <index name="auth_permission_content_type_id_01ab375a_uniq" unique="true" columns="content_type_id,codename"/>
+    </table>
+    <table name="auth_user" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="password" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_login" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="is_superuser" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="username" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
+      <column name="first_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="254" scale="0" nullable="false" jdbcType="12"/>
+      <column name="is_staff" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="is_active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="date_joined" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" table="auth_user_groups" schema="" catalog="arri" columns="user_id"/>
+      <exported-key name="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" table="auth_user_user_permissions" schema="" catalog="arri" columns="user_id"/>
+      <exported-key name="django_admin_log_user_id_c564eba6_fk_auth_user_id" table="django_admin_log" schema="" catalog="arri" columns="user_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="auth_user_groups" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_user_groups_group_id_97559544_fk_auth_group_id" columns="group_id" ref-table="auth_group" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="auth_user_groups_user_id_94350c0c_uniq" unique="true" columns="user_id,group_id"/>
+      <index name="auth_user_groups_group_id_97559544_fk_auth_group_id" unique="false" columns="group_id"/>
+    </table>
+    <table name="auth_user_user_permissions" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="permission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id" columns="permission_id" ref-table="auth_permission" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="auth_user_user_permissions_user_id_14a6b632_uniq" unique="true" columns="user_id,permission_id"/>
+      <index name="auth_user_user_perm_permission_id_1fbb5f2c_fk_auth_permission_id" unique="false" columns="permission_id"/>
+    </table>
+    <table name="chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="advise" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="Teacher" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="Msg_chats_chats_id_012db816_fk_Chats_id" table="msg_chats" schema="" catalog="arri" columns="chats_id"/>
+      <exported-key name="Students_chats_chats_id_00052c8d_fk_Chats_id" table="students_chats" schema="" catalog="arri" columns="chats_id"/>
+      <exported-key name="Teacher_chats_chats_id_0e5e1c9b_fk_Chats_id" table="teacher_chats" schema="" catalog="arri" columns="chats_id"/>
+      <index name="name" unique="true" columns="name"/>
+    </table>
+    <table name="django_admin_log" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="action_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="object_id" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="object_repr" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="action_flag" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="change_message" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="content_type_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="django_admin__content_type_id_c4bce8eb_fk_django_content_type_id" columns="content_type_id" ref-table="django_content_type" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="django_admin_log_user_id_c564eba6_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="django_admin__content_type_id_c4bce8eb_fk_django_content_type_id" unique="false" columns="content_type_id"/>
+      <index name="django_admin_log_user_id_c564eba6_fk_auth_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="django_content_type" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="app_label" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="model" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_permissi_content_type_id_2f476e4b_fk_django_content_type_id" table="auth_permission" schema="" catalog="arri" columns="content_type_id"/>
+      <exported-key name="django_admin__content_type_id_c4bce8eb_fk_django_content_type_id" table="django_admin_log" schema="" catalog="arri" columns="content_type_id"/>
+      <index name="django_content_type_app_label_76bd3d3b_uniq" unique="true" columns="app_label,model"/>
+    </table>
+    <table name="django_migrations" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="app" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="applied" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="django_session" schema="" catalog="arri" type="TABLE">
+      <column name="session_key" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="session_data" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="expire_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="session_key"/>
+      <index name="django_session_de54fa62" unique="false" columns="expire_date"/>
+    </table>
+    <table name="msg" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="content" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="students_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Msg_students_id_8bf4293d_fk_Students_id" columns="students_id" ref-table="students" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="Msg_chats_msg_id_a8c00300_fk_Msg_id" table="msg_chats" schema="" catalog="arri" columns="msg_id"/>
+    </table>
+    <table name="msg_chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="msg_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chats_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Msg_chats_chats_id_012db816_fk_Chats_id" columns="chats_id" ref-table="chats" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="Msg_chats_msg_id_a8c00300_fk_Msg_id" columns="msg_id" ref-table="msg" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Msg_chats_msg_id_b2e935e0_uniq" unique="true" columns="msg_id,chats_id"/>
+      <index name="Msg_chats_chats_id_012db816_fk_Chats_id" unique="false" columns="chats_id"/>
+    </table>
+    <table name="students" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="passwd" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="std_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="Msg_students_id_8bf4293d_fk_Students_id" table="msg" schema="" catalog="arri" columns="students_id"/>
+      <exported-key name="Students_chats_students_id_1fc5155f_fk_Students_id" table="students_chats" schema="" catalog="arri" columns="students_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="students_chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="students_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chats_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Students_chats_chats_id_00052c8d_fk_Chats_id" columns="chats_id" ref-table="chats" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="Students_chats_students_id_1fc5155f_fk_Students_id" columns="students_id" ref-table="students" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Students_chats_students_id_45bd851d_uniq" unique="true" columns="students_id,chats_id"/>
+      <index name="Students_chats_chats_id_00052c8d_fk_Chats_id" unique="false" columns="chats_id"/>
+    </table>
+    <table name="teacher" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="passwd" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="Advise_teacher_id_3e508f1c_fk_Teacher_id" table="advise" schema="" catalog="arri" columns="teacher_id"/>
+      <exported-key name="Teacher_chats_teacher_id_9f2924b7_fk_Teacher_id" table="teacher_chats" schema="" catalog="arri" columns="teacher_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="teacher_chats" schema="" catalog="arri" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="teacher_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chats_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="Teacher_chats_chats_id_0e5e1c9b_fk_Chats_id" columns="chats_id" ref-table="chats" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="Teacher_chats_teacher_id_9f2924b7_fk_Teacher_id" columns="teacher_id" ref-table="teacher" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="Teacher_chats_teacher_id_1273932e_uniq" unique="true" columns="teacher_id,chats_id"/>
+      <index name="Teacher_chats_chats_id_0e5e1c9b_fk_Chats_id" unique="false" columns="chats_id"/>
+    </table>
+  </data-source>
+</component>

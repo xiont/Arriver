@@ -1,19 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>删除签到</title>
-</head>
+{% extends "tch_base.html" %}
+{% block body %}
 
-<body>
-<h1>删除签到：</h1>
-<form method = 'post' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{uf.as_p}}
-    <input type="submit" value = "ok" />
-</form>
-<br>
-<a href="/login/">登陆</a>
-</body>
-</html>
+    <div style="margin-left: 37%;margin-top:5%;width: 400px;">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center;font-size: 30px;background-color:#c1e2b3;color:#FFFFFF;">
+                发送签到
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>教师名字</label>
+                        <input class="form-control" type="text" name="teacher" required="required" value={{ teacher_name }}>
+                        <p class="help-block">请输入教师名字"</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>群组名</label>
+                        <select id="select1" class="form-control"  name="chat" required="required">
+                            {% for key,value in arriver_set.items %}
+                                <option>{{ key }}</option>
+                            {% endfor %}
+                        </select>
+
+
+{#                        <input class="form-control"  name="chat" type="text" required="required"/>#}
+                        <p class="help-block">输入群组名字</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>通知标题</label>
+                        <select id="select2" class="form-control"  name="title" required="required">
+{#                            {% for it in arriver_set.chat %}#}
+{#                                <option>{{ it }}</option>#}
+{#                            {% endfor %}#}
+                        </select>
+{#                        <input class="form-control"  name="title" type="text" required="required" value="">#}
+                        <p class="help-block">输入发布签到的标题</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>接收邮箱</label>
+                        <input class="form-control"  name="send_email" type="email" required="required" />
+                        <p class="help-block">请正确输入附件需要接收的邮箱（只有一次机会）</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-info" style="width: 170px;">提交 </button>
+                    <button  class="btn btn-info" style="margin-left:20px;width: 170px;" id = "button">返回</button>
+                </form>
+            </div>
+        </div>
+    </div>
+ <script src="/static/js/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function(){
+            var button = $("#button");
+            button.click(function(){
+
+                setTimeout('jumpurl()',1);
+            });
+                re = new RegExp("&#39;","g");
+                re2 = new RegExp('u','g')
+                var str='{{ arriver_set }}'.replace(re,'"').replace(re2,'');
+                var chat = jQuery("#select1  option:selected").text();
+               var select2 = $("#select2");
+               for(var i = 0;i<jQuery.parseJSON(str)[chat].length;i++)
+               {
+                   var string = "<option>"+jQuery.parseJSON(str)[chat][i]+"<option>";
+                   alert(string);
+                   select2.append(string);
+               }
+
+        });
+        function jumpurl(){
+            location='/Teacher/handler/';
+        }
+    </script>
+{% endblock %}
+
+
+{#<form method="post" enctype="multipart/form-data">#}
+{#    <input type="hidden" name="csrfmiddlewaretoken" value="voSpUpzF9MvESmLNp0m9xlmWUMflnL7E2oqe7ZF4JAYg80OAD4URHjSULvbcxm7l">#}
+{#    <p><label for="id_teacher">老师:</label> <input id="id_teacher" maxlength="100" name="teacher" type="text" required=""></p>#}
+{#<p><label for="id_title">通知标题:</label> <input id="id_title" maxlength="100" name="title" type="text" required=""></p>#}
+{#<p><label for="id_chat">群组名:</label> <input id="id_chat" maxlength="100" name="chat" type="text" required=""></p>#}
+{#<p><label for="id_send_email">接收邮箱:</label> <input id="id_send_email" name="send_email" type="email" required=""></p>#}
+{#    <input type="submit" value="ok">#}
+{#</form>#}

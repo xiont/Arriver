@@ -27,6 +27,7 @@ class Students(models.Model):
     name = models.CharField(max_length=60) #学生姓名
     std_id = models.BigIntegerField()  #学生学号
     chats = models.ManyToManyField(Chats) #学生与群组
+    img = models.ImageField(upload_to="/static/images/",default="static/images/user.png")
     class Meta:
         db_table = u'Students'
 
@@ -36,6 +37,7 @@ class Teacher(models.Model):
     passwd = models.CharField(max_length=60)    #密码
     name = models.CharField(max_length=60) #老师姓名
     chats = models.ManyToManyField(Chats) #老师对应多个群组
+    img = models.ImageField(upload_to="/static/images/",default="static/images/user.png")
     class Meta:
         db_table = u'Teacher'
 

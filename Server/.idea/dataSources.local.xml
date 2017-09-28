@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Django default" uuid="f78af408-95df-4e80-bb49-c78b92ec286e">
+      <user-name>root</user-name>
+      <user-password>df9bdf98df99df9e</user-password>
+      <schema-pattern>arri.*</schema-pattern>
+      <default-schemas>arri.*</default-schemas>
+    </data-source>
+    <data-source name="Django default2" uuid="9e348e1d-d5a8-4a20-a210-21d7b871aca6">
+      <user-name>root</user-name>
+      <user-password>df9bdf98df99df9e</user-password>
+      <schema-pattern>arri.*</schema-pattern>
+      <default-schemas>arri.*</default-schemas>
+    </data-source>
+  </component>
+</project>

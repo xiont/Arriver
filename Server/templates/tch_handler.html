@@ -1,0 +1,48 @@
+{% extends "tch_base.html" %}
+{% block body %}
+    <div style="width: 50%;margin-left: 23%; margin-top: 2%;background-color: #FFFFFF;padding: 100px 20px 100px 20px;">
+<div class="row" >
+
+                 <div class="col-md-3 col-sm-3 col-xs-6" style="width: 50%;" onclick="location='/Teacher/puarri/'">
+                      <div class="alert alert-info back-widget-set text-center">
+                            <i class="fa fa-history fa-5x"></i>
+                            <h3>发布签到&nbsp;</h3>
+                           及时发布签到，学生签到
+                        </div>
+                    </div>
+
+              <div class="col-md-3 col-sm-3 col-xs-6"  style="width: 50%;" onclick="location='/Teacher/crechat/'">
+                      <div class="alert alert-success back-widget-set text-center">
+                            <i class="fa fa-bars fa-5x"></i>
+                            <h3>创建群组</h3>
+                            创建一个教学班群组管理
+                        </div>
+                    </div>
+
+
+
+        </div>
+
+    <div class="row">
+
+
+
+               <div class="col-md-3 col-sm-3 col-xs-6"  style="width: 50%;" onclick="location='/Teacher/detail/'">
+                      <div class="alert alert-warning back-widget-set text-center">
+                            <i class="fa fa-recycle fa-5x"></i>
+                            <h3>查看信息</h3>
+                           查看教师群组与人员信息
+                        </div>
+                    </div>
+
+               <div class="col-md-3 col-sm-3 col-xs-6"  style="width: 50%;" onclick="location='/Teacher/printdelarri/'">
+                      <div class="alert alert-danger back-widget-set text-center">
+                            <i class="fa fa-briefcase fa-5x"></i>
+                            <h3>发送签到 </h3>
+                            发送学生签到情况到指定邮箱
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+{% endblock %}

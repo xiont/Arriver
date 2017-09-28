@@ -68,13 +68,23 @@ class ArriverForm(forms.Form):
 def index(req):
     #username = req.COOKIES.get('username','')
     try :
-        username = req.COOKIES.get('username','')
+        std_name = req.COOKIES.get('std_name','')
+        tch_name = req.COOKIES.get('tch_name','')
         #username = req.session['user']
     except:
-        username =''
-    return render_to_response('index.html' ,{'username':username})
+        std_name =''
+        tch_name = ""
+    return render_to_response('index.html' ,{'std_name':std_name,'tch_name':tch_name})
 
 def Std_Reg(req):
+    if req.COOKIES.get("std_name",''):
+        std_name = req.COOKIES.get("std_name",'')
+        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        print img
+    else:
+        img = ""
+        std_name = ''
+    print std_name
     if req.method == 'POST':
         uf = StudentsForm(req.POST)
         if uf.is_valid():
@@ -92,9 +102,17 @@ def Std_Reg(req):
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = StudentsForm()
-    return render(req,'std_reg.html',{'uf':uf})
+    return render(req,'std_reg.html',{"std_name":std_name,'img':img})
 
 def Std_Log(req):
+    if req.COOKIES.get("std_name",''):
+        std_name = req.COOKIES.get("std_name",'')
+        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        print img
+    else:
+        img = ""
+        std_name = ''
+
     if req.method == 'POST':
         uf = StudentsLogForm(req.POST)
         if uf.is_valid():
@@ -107,7 +125,7 @@ def Std_Log(req):
                 #比较成功，跳转index
                 response = HttpResponseRedirect('/index/')
                 #将username写入浏览器cookie,失效时间为3600
-                response.set_cookie('username',username,3600,True)
+                response.set_cookie('std_name',username,3600,True)
                 #req.session['is_login'] = True
                 #req.session['user'] = username
                 return response
@@ -116,9 +134,16 @@ def Std_Log(req):
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = StudentsLogForm()
-    return render(req,'std_login.html',{'uf':uf})
+    return render(req,'std_login.html',{"std_name":std_name,'img':img})
 
 def Tch_Reg(req):
+    if req.COOKIES.get("tch_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        print img
+    else:
+        img = ""
+        tch_name = ''
     if req.method == 'POST':
         uf = TeacherForm(req.POST)
         if uf.is_valid():
@@ -135,9 +160,16 @@ def Tch_Reg(req):
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = TeacherForm()
-    return render(req,'tch_reg.html',{'uf':uf})
+    return render(req,'tch_reg.html',{'uf':uf,'tch_name':tch_name,'img':img})
 
 def Tch_Log(req):
+    if req.COOKIES.get("tch_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        print img
+    else:
+        img = ""
+        tch_name = ''
     if req.method == 'POST':
         uf = TeacherLogForm(req.POST)
         if uf.is_valid():
@@ -148,9 +180,9 @@ def Tch_Log(req):
             user = Teacher.objects.filter(username__exact = username,passwd__exact = passwd)
             if user:
                 #比较成功，跳转index
-                response = HttpResponseRedirect('/index/')
+                response = HttpResponseRedirect('/Teacher/handler/')
                 #将username写入浏览器cookie,失效时间为3600
-                response.set_cookie('username',username,3600,True)
+                response.set_cookie('tch_name',username,3600,True)
                 #req.session['is_login'] = True
                 #req.session['user'] = username
                 return response
@@ -159,7 +191,7 @@ def Tch_Log(req):
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = TeacherLogForm()
-    return render(req,'tch_log.html',{'uf':uf})
+    return render(req,'tch_log.html',{'uf':uf,'tch_name':tch_name,'img':img})
 
 
 #退出
@@ -167,7 +199,8 @@ def logout(req):
     response = HttpResponseRedirect('/index/')
     #清理cookie里保存username
     try:
-        response.delete_cookie('username')
+        response.delete_cookie('std_name')
+        response.delete_cookie('tch_name')
         # del req.session['user']
         # req.session['is_login'] = False
     except:
@@ -176,13 +209,21 @@ def logout(req):
 
 
 def Add_Chat(req):#学生加入群组
+    if req.COOKIES.get("std_name",''):
+        std_name = req.COOKIES.get("std_name",'')
+        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        print img
+    else:
+        img = ""
+        std_name = ''
+
     if req.method == 'POST':
         uf = AddChatForm(req.POST)
         if uf.is_valid():
             #获取表单用户密码
             chat_name = uf.cleaned_data['chat_name']
             std_name = uf.cleaned_data['std_name']
-            username = req.COOKIES.get('username','') #学生的帐号
+            username = req.COOKIES.get('std_name','') #学生的帐号
             teacher = uf.cleaned_data['teacher']
             #获取的表单数据与数据库进行比较
             user = Students.objects.filter(username__exact = username,name__exact = std_name)[0]
@@ -195,10 +236,18 @@ def Add_Chat(req):#学生加入群组
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = AddChatForm()
-
-    return render(req,'add_chat.html',{'uf':uf})
+    return render(req,'add_chat.html',{'uf':uf,'std_name':std_name,'img':img})
 
 def Cre_Chat(req):#老师创建群组
+     if req.COOKIES.get("tch_name",''):
+         tch_name = req.COOKIES.get("tch_name",'')
+         img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+         teacher_name = Teacher.objects.filter(username = tch_name)[0].name
+         print img
+     else:
+         img = ""
+         tch_name = ''
+         teacher_name=''
      if req.method == 'POST':
         uf = CreChatForm(req.POST)
         if uf.is_valid():
@@ -206,7 +255,7 @@ def Cre_Chat(req):#老师创建群组
             name = uf.cleaned_data['name']
             advise = uf.cleaned_data['advise']
             passwd = uf.cleaned_data['passwd']
-            username = req.COOKIES.get('username','') #老师的帐号
+            username = req.COOKIES.get('tch_name','') #老师的帐号
             teacher = uf.cleaned_data['teacher']
             #获取的表单数据与数据库进行比较
             user = Teacher.objects.filter(username__exact = username,name = teacher,passwd__exact = passwd)[0]
@@ -219,10 +268,18 @@ def Cre_Chat(req):#老师创建群组
                 return HttpResponse("对不起 信息出错啦")
      else:
         uf = CreChatForm()
-     return render(req,'cre_chat.html',{'uf':uf})
+     return render(req,'cre_chat.html',{'uf':uf,'tch_name':tch_name,'img':img,'teacher_name':teacher_name})
 
 import pytz
 def Std_Arri(req): #学生签到
+    if req.COOKIES.get("username",''):
+        std_name = req.COOKIES.get("username",'')
+        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        print img
+    else:
+        img = ""
+        std_name = ''
+
     if req.method == 'POST':
         uf = ArriverForm(req.POST)
         if uf.is_valid():
@@ -251,12 +308,24 @@ def Std_Arri(req): #学生签到
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = ArriverForm()
-    return render(req,'std_arri.html',{'uf':uf})
+    return render(req,'std_arri.html',{'uf':uf,'std_name':std_name,'img':img})
 
 
 
 import datetime
 def Pub_Arri(req): #老师发布签到通知
+     if req.COOKIES.get("tch_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        chat_list = [item.name for item in Chats.objects.filter(Teacher = tch_name)]
+        teacher_name = Teacher.objects.filter(username = tch_name)[0].name
+        print img
+     else:
+        teacher_name = ''
+        img = ""
+        tch_name = ''
+        chat_list = []
+
      if req.method == 'POST':
         uf = PubAdviseForm(req.POST)
         if uf.is_valid():
@@ -265,7 +334,7 @@ def Pub_Arri(req): #老师发布签到通知
             chat = uf.cleaned_data['chat']
             teacher = uf.cleaned_data['teacher']
             sign = uf.cleaned_data['sign']
-            username = req.COOKIES.get('username','') #老师的帐号
+            username = req.COOKIES.get('tch_name','') #老师的帐号
             #获取的表单数据与数据库进行比较
             user = Teacher.objects.filter(username__exact = username,name = teacher)[0]
             if user:
@@ -275,12 +344,26 @@ def Pub_Arri(req): #老师发布签到通知
                 return HttpResponse("对不起 信息出错啦")
      else:
          uf = PubAdviseForm()
-     return render(req,'pub_advise.html',{'uf':uf})
+     return render(req,'pub_advise.html',{'uf':uf,'tch_name':tch_name,'img':img,'chat_list':chat_list,'teacher_name':teacher_name})
 
 
 import  csv,os
 from Server import settings
 def Print_Del_Arri(req): #老师打印签到情况
+    if req.COOKIES.get("tch_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        teacher_name = Teacher.objects.filter(username = tch_name)[0].name
+        chat_list = [item.name for item in Chats.objects.filter(Teacher = teacher_name)]
+        arriver_set = {}
+        for item in chat_list:
+            arriver_set[item] = [it.title for it in Advise.objects.filter(chats=item)]
+        print arriver_set
+    else:
+        img = ""
+        tch_name = ''
+        teacher_name =""
+        arriver_set = {}
     if req.method == 'POST':
         uf = PrintDelArriForm(req.POST)
         if uf.is_valid():
@@ -289,7 +372,7 @@ def Print_Del_Arri(req): #老师打印签到情况
             teacher = uf.cleaned_data['teacher']
             chat = uf.cleaned_data['chat']
             send_email = uf.cleaned_data['send_email']
-            username = req.COOKIES.get('username','') #老师的帐号
+            username = req.COOKIES.get('tch_name','') #老师的帐号
             #获取的表单数据与数据库进行比较
             user = Teacher.objects.filter(username__exact = username,name = teacher)[0]
             if user:
@@ -319,7 +402,7 @@ def Print_Del_Arri(req): #老师打印签到情况
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = PrintDelArriForm()
-    return render(req,'print_del_arri.html',{'uf':uf})
+    return render(req,'print_del_arri.html',{'uf':uf,'img':img,'tch_name':tch_name,'teacher_name':teacher_name,'arriver_set':arriver_set})
 
 
 
@@ -374,6 +457,163 @@ def JsonTest(req):
     dict = {"first":"ff","second":"cc"}
     jsons = json.dumps(dict)
     return HttpResponse(jsons)
+
+
+
+
+def blank(req):
+    return render(req,"blank.html")
+
+def Select(req):
+    if req.COOKIES.get("tch_name",'')or req.COOKIES.get("std_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        std_name = req.COOKIES.get("std_name",'')
+        #img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        #print img
+    else:
+        #img = ""
+        tch_name = ''
+        std_name =''
+    return render(req,"select.html",{'tch_name':tch_name,'std_name':std_name})
+
+
+
+class Img_Form(forms.Form):
+    img = forms.CharField(required=False)
+
+from PIL import Image
+def Std_Upload_Img(request,user_id):
+    if request.method == "POST":
+        form = Img_Form(request.POST,request.FILES)
+        print form
+        if form.is_valid():
+            f = request.FILES.get('img')
+            print request.FILES
+            print f
+            baseDir = os.path.dirname(os.path.abspath(__name__))
+            jpgdir = os.path.join(baseDir,'static','images','student')
+            filename = os.path.join(jpgdir,user_id+'.GIF')
+            fobj = open(filename,'wb')
+            for chrunk in f.chunks():
+                fobj.write(chrunk)
+            fobj.close()
+            imge = Image.open(filename)
+            imge.thumbnail((45, 45), Image.ANTIALIAS)
+            imge.save(filename,'GIF')
+            img = 'static/images/student/%s'%(user_id+'.GIF')
+            Students.objects.filter(id = user_id).update(img = img)
+            print img
+            return render(request,'index.html')
+        else:
+            return HttpResponse("failed")
+    else:
+        form = Img_Form()
+    return render(request,'upload_img.html')
+
+def Tch_Upload_Img(request,username):
+    if request.COOKIES.get("tch_name",''):
+        tch_name = request.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        print img
+    else:
+        img = ""
+        tch_name = ''
+
+    if request.method == "POST":
+        form = Img_Form(request.POST,request.FILES)
+        print form
+        if form.is_valid():
+            f = request.FILES.get('img')
+            print request.FILES
+            print f
+            baseDir = os.path.dirname(os.path.abspath(__name__))
+            jpgdir = os.path.join(baseDir,'static','images','teacher')
+            filename = os.path.join(jpgdir,username+'.GIF')
+            fobj = open(filename,'wb')
+            for chrunk in f.chunks():
+                fobj.write(chrunk)
+            fobj.close()
+            imge = Image.open(filename)
+            imge.thumbnail((45, 45), Image.ANTIALIAS)
+            imge.save(filename,'GIF')
+            img = 'static/images/teacher/%s'%(username+'.GIF')
+            Teacher.objects.filter(username = tch_name).update(img = img)
+            print img
+            return render(request,'index.html')
+        else:
+            return HttpResponse("failed")
+    else:
+        form = Img_Form()
+    return render(request,'upload_img.html',{'tch_name':tch_name,'img':img})
+
+def Tch_Detail(req):
+    if req.COOKIES.get("tch_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        print img
+    else:
+        img = ""
+        tch_name = ''
+
+    #寻找所有的群组
+    name = Teacher.objects.filter(username__exact = tch_name)[0].name
+    chats_list = Chats.objects.filter(Teacher = name)
+    chats_list_ = [item.name for item in chats_list]
+    dict ={}
+    #dict = {'chat':{'student_name':[std_usrname,std_id],'student':[student_name,std_id]},'chat':{'student':[student_name,std_id],'student':[student_name,std_id]},}
+    for chat in chats_list:
+        std_chat_list = []
+        print chat.name
+        for student in Students.objects.filter(chats = chat):
+            std_chat_list.append([student.username,student.name,student.std_id])
+        dict[chat.name] = std_chat_list
+    print dict
+    return render(req,'tch_detail.html',{'dict':dict,'tch_name':tch_name,'img':img})
+
+
+
+def Tch_Handler(req):
+    if req.COOKIES.get("tch_name",''):
+        tch_name = req.COOKIES.get("tch_name",'')
+        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        print img
+    else:
+        img = ""
+        tch_name = ''
+    return render(req,'tch_handler.html',{'tch_name':tch_name,'img':img})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 from django.views.decorators.csrf import csrf_exempt

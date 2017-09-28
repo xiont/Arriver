@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block body %}
+
+        <div class="navbar navbar-inverse set-radius-zero">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+
+                    <img src="/static/img/logo.png">
+                </a>
+
+            </div>
+
+            <div> </div>
+            <div class="right-div">
+                <a href="#" class="btn btn-info pull-right">LOG ME OUT</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div style="margin-left: 37%;margin-top:5%;width: 400px;">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center;font-size: 30px;">
+                用户头像上传
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post" role="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>请选择照片</label>
+                        <input type="file"  id="file0"    name="img"   />
+                        <p class="help-block">请上传你喜欢的照片作为头像</p>
+                        <img src="" id="img0"  style="width: 200px;height: 200px; margin-left: 20%;">
+                    </div>
+                    <button type="submit" class="btn btn-info" style="width: 170px; margin-left: 25%;">上传 </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script src="/static/js/jquery-1.10.2.js"></script>
+    <script>
+$("#file0").change(function(){
+ var objUrl = getObjectURL(this.files[0]) ;
+ console.log("objUrl = "+objUrl) ;
+ if (objUrl) {
+  $("#img0").attr("src", objUrl) ;
+ }
+}) ;
+//建立一個可存取到該file的url
+function getObjectURL(file) {
+ var url = null ;
+ if (window.createObjectURL!=undefined) { // basic
+  url = window.createObjectURL(file) ;
+ } else if (window.URL!=undefined) { // mozilla(firefox)
+  url = window.URL.createObjectURL(file) ;
+ } else if (window.webkitURL!=undefined) { // webkit or chrome
+  url = window.webkitURL.createObjectURL(file) ;
+ }
+ return url ;
+}
+</script>
+{% endblock %}
