@@ -11,15 +11,14 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="title" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="Sign" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="teacher" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="chats" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
-      <column name="teacher_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="Advise_teacher_id_3e508f1c_fk_Teacher_id" columns="teacher_id" ref-table="teacher" ref-schema="" ref-catalog="arri" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="arriver" schema="" catalog="arri" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="std_name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="chats" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
@@ -193,7 +192,6 @@
       <column name="name" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
       <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="Advise_teacher_id_3e508f1c_fk_Teacher_id" table="advise" schema="" catalog="arri" columns="teacher_id"/>
       <exported-key name="Teacher_chats_teacher_id_9f2924b7_fk_Teacher_id" table="teacher_chats" schema="" catalog="arri" columns="teacher_id"/>
       <index name="username" unique="true" columns="username"/>
     </table>

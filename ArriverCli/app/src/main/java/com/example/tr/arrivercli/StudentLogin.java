@@ -60,8 +60,10 @@ public class StudentLogin extends AppCompatActivity implements View.OnClickListe
                     Log.d("TeacherLogin",passwd_);
                     FormBody formBody = new FormBody.Builder().add("username",username_).add("passwd",passwd_).build();
                     OkHttpClient client = new OkHttpClient();
+                    String url0 = MainActivity.url + "/Student/Slogin/";
                     Request request = new Request.Builder()
-                            .url("http://104.225.157.237:8000/Student/Slogin/")
+                            .url(url0)
+                            //.url("http://104.225.157.237:8000/Student/Slogin/")
                             .post(formBody)
                             .build();
                     Response response = client.newCall(request).execute();

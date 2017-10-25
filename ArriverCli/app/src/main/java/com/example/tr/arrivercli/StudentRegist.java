@@ -62,8 +62,10 @@ public class StudentRegist extends AppCompatActivity implements View.OnClickList
                     Log.d("TeacherLogin", passwd_);
                     FormBody formBody = new FormBody.Builder().add("username", username_).add("name", name_).add("std_id",std_id_).add("passwd2", passwd2_).add("passwd", passwd_).build();
                     OkHttpClient client = new OkHttpClient();
+                    String url0 = MainActivity.url + "/Student/Sregist/";
                     Request request = new Request.Builder()
-                            .url("http://104.225.157.237:8000/Student/Sregist/")
+                            .url(url0)
+                           // .url("http://104.225.157.237:8000/Student/Sregist/")
                             .post(formBody)
                             .build();
                     Response response = client.newCall(request).execute();

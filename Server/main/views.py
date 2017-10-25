@@ -1,4 +1,4 @@
-#encoding:utf-8
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
@@ -57,7 +57,7 @@ class PrintDelArriForm(forms.Form):
     send_email = forms.EmailField(label=u'接收邮箱')
 
 class ArriverForm(forms.Form):
-    user_id = forms.IntegerField(label=u'标识符') #签到的随机数字
+    user_id = forms.CharField(label=u'标识符',max_length=60) #签到的随机数字
     name = forms.CharField(max_length=60,label=u'签到标签')  #签到的标签
     std_name = forms.CharField(max_length=60,label=u'学生名字')     #签到学生用户
     chats = forms.CharField(max_length=60,label = u'签到群组')  #签到的归属群组
@@ -79,7 +79,7 @@ def index(req):
 def Std_Reg(req):
     if req.COOKIES.get("std_name",''):
         std_name = req.COOKIES.get("std_name",'')
-        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        img =str(Students.objects.filter(username__exact = std_name)[0].img)
         print img
     else:
         img = ""
@@ -107,7 +107,7 @@ def Std_Reg(req):
 def Std_Log(req):
     if req.COOKIES.get("std_name",''):
         std_name = req.COOKIES.get("std_name",'')
-        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        img = str(Students.objects.filter(username__exact = std_name)[0].img)
         print img
     else:
         img = ""
@@ -139,7 +139,7 @@ def Std_Log(req):
 def Tch_Reg(req):
     if req.COOKIES.get("tch_name",''):
         tch_name = req.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         print img
     else:
         img = ""
@@ -165,7 +165,7 @@ def Tch_Reg(req):
 def Tch_Log(req):
     if req.COOKIES.get("tch_name",''):
         tch_name = req.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         print img
     else:
         img = ""
@@ -211,7 +211,7 @@ def logout(req):
 def Add_Chat(req):#学生加入群组
     if req.COOKIES.get("std_name",''):
         std_name = req.COOKIES.get("std_name",'')
-        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
+        img = str(Students.objects.filter(username__exact = std_name)[0].img)
         print img
     else:
         img = ""
@@ -241,7 +241,7 @@ def Add_Chat(req):#学生加入群组
 def Cre_Chat(req):#老师创建群组
      if req.COOKIES.get("tch_name",''):
          tch_name = req.COOKIES.get("tch_name",'')
-         img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+         img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
          teacher_name = Teacher.objects.filter(username = tch_name)[0].name
          print img
      else:
@@ -272,27 +272,39 @@ def Cre_Chat(req):#老师创建群组
 
 import pytz
 def Std_Arri(req): #学生签到
-    if req.COOKIES.get("username",''):
-        std_name = req.COOKIES.get("username",'')
-        img ='/' +str(Students.objects.filter(username__exact = std_name)[0].img)
-        print img
+    if req.COOKIES.get("std_name",''):
+        std_name = req.COOKIES.get("std_name",'')
+        student_name = Students.objects.filter(username = std_name)[0].name
+        img =str(Students.objects.filter(username__exact = std_name)[0].img)
+        chats =[item.name for item in Students.objects.filter(username=std_name)[0].chats.all()]
+        advises = []
+        for item in chats:
+            advises.append(Advise.objects.filter(chats = item)[0].title)
+        #print chats
+        #print advises
     else:
         img = ""
         std_name = ''
+        student_name=''
+        chats = ''
+        advises = ''
 
     if req.method == 'POST':
         uf = ArriverForm(req.POST)
+        print uf.errors
         if uf.is_valid():
             #获取表单用户密码
             user_id = uf.cleaned_data['user_id']
             name = uf.cleaned_data['name']
             std_name = uf.cleaned_data['std_name']
             chats = uf.cleaned_data['chats']
-            username = req.COOKIES.get('username','') #学生的帐号
+            username = req.COOKIES.get('std_name','') #学生的帐号
             late_reason = uf.cleaned_data['late_reason']
             #获取的表单数据与数据库进行比较
             user = Students.objects.filter(username__exact = username,name__exact = std_name)[0]
             advise = Advise.objects.filter(Sign = str(user_id))[0]
+
+            print user,advises
             if user and advise:
                 tz = pytz.timezone('Asia/Shanghai')
                 cuttime = Advise.objects.filter(Sign = str(user_id))[0].time + datetime.timedelta(hours=1)
@@ -308,7 +320,7 @@ def Std_Arri(req): #学生签到
                 return HttpResponse("对不起 信息出错啦")
     else:
         uf = ArriverForm()
-    return render(req,'std_arri.html',{'uf':uf,'std_name':std_name,'img':img})
+    return render(req,'std_arri.html',{'uf':uf,'std_name':std_name,'img':img,'student_name':student_name,'chats':chats,'advises':advises})
 
 
 
@@ -316,7 +328,7 @@ import datetime
 def Pub_Arri(req): #老师发布签到通知
      if req.COOKIES.get("tch_name",''):
         tch_name = req.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         chat_list = [item.name for item in Chats.objects.filter(Teacher = tch_name)]
         teacher_name = Teacher.objects.filter(username = tch_name)[0].name
         print img
@@ -338,7 +350,7 @@ def Pub_Arri(req): #老师发布签到通知
             #获取的表单数据与数据库进行比较
             user = Teacher.objects.filter(username__exact = username,name = teacher)[0]
             if user:
-                Advise.objects.create(title = title,Sign =sign,teacher = Teacher.objects.filter(name = teacher)[0],chats = chat,time = datetime.datetime.now())
+                Advise.objects.create(title = title,Sign =sign,teacher = teacher,chats = chat,time = datetime.datetime.now())
                 return HttpResponseRedirect('/index/')
             else:
                 return HttpResponse("对不起 信息出错啦")
@@ -352,7 +364,7 @@ from Server import settings
 def Print_Del_Arri(req): #老师打印签到情况
     if req.COOKIES.get("tch_name",''):
         tch_name = req.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         teacher_name = Teacher.objects.filter(username = tch_name)[0].name
         chat_list = [item.name for item in Chats.objects.filter(Teacher = teacher_name)]
         arriver_set = {}
@@ -376,8 +388,8 @@ def Print_Del_Arri(req): #老师打印签到情况
             #获取的表单数据与数据库进行比较
             user = Teacher.objects.filter(username__exact = username,name = teacher)[0]
             if user:
-                Arrivers = Arriver.objects.filter(user_id = Advise.objects.filter(teacher = Teacher.objects.filter(name=teacher)[0])[0].Sign,chats = chat)
-                dir = os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))#+'\\Arriver.csv').replace("\\",'/')
+                Arrivers = Arriver.objects.filter(user_id = Advise.objects.filter(teacher = teacher)[0].Sign,chats = chat)
+                dir = os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))
                 files = (os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))+'\\Arriver.csv').replace("\\",'/')
                 if os.path.exists(dir):
                     pass
@@ -392,11 +404,10 @@ def Print_Del_Arri(req): #老师打印签到情况
                     writer.writerow([str(item.std_name),str(item.chats),str(Students.objects.filter(name = item.std_name)[0].std_id),str(item.qiandao_datetime.strftime('%Y-%m-%d %H:%M:%S')),str(item.is_late),str(item.late_reason)])
                     print item.std_name,item.chats,Students.objects.filter(name = item.std_name)[0].std_id,item.qiandao_datetime,item.is_late,item.late_reason
                 csvfile.close()
-                txt = str(Advise.objects.filter(title = title,teacher = Teacher.objects.filter(name=teacher)[0])[0].time.strftime('%Y-%m-%d %H:%M:%S')+chat+"签到情况").encode("utf-8")
+                txt = str(Advise.objects.filter(title = title,teacher = teacher)[0].time.strftime('%Y-%m-%d %H:%M:%S')+chat+"签到情况").encode("utf-8")
                 sendemail(send_email,files,txt,dir)
-                Advise.objects.filter(title = title,teacher = Teacher.objects.filter(name=teacher)[0]).delete()
+                Advise.objects.filter(title = title,teacher = teacher).delete()
                 Arrivers.delete()
-
                 return HttpResponseRedirect('/index/')
             else:
                 return HttpResponse("对不起 信息出错啦")
@@ -482,7 +493,16 @@ class Img_Form(forms.Form):
     img = forms.CharField(required=False)
 
 from PIL import Image
-def Std_Upload_Img(request,user_id):
+def Std_Upload_Img(request,username):
+
+    if request.COOKIES.get("tch_name",''):
+        std_name = request.COOKIES.get("std_name",'')
+        img =str(Students.objects.filter(username__exact = std_name)[0].img)
+        print img
+    else:
+        img = ""
+        std_name = ''
+
     if request.method == "POST":
         form = Img_Form(request.POST,request.FILES)
         print form
@@ -491,8 +511,8 @@ def Std_Upload_Img(request,user_id):
             print request.FILES
             print f
             baseDir = os.path.dirname(os.path.abspath(__name__))
-            jpgdir = os.path.join(baseDir,'static','images','student')
-            filename = os.path.join(jpgdir,user_id+'.GIF')
+            jpgdir = os.path.join(baseDir,'collected_static','images','student')
+            filename = os.path.join(jpgdir,username+'.GIF')
             fobj = open(filename,'wb')
             for chrunk in f.chunks():
                 fobj.write(chrunk)
@@ -500,20 +520,20 @@ def Std_Upload_Img(request,user_id):
             imge = Image.open(filename)
             imge.thumbnail((45, 45), Image.ANTIALIAS)
             imge.save(filename,'GIF')
-            img = 'static/images/student/%s'%(user_id+'.GIF')
-            Students.objects.filter(id = user_id).update(img = img)
+            img = 'collected_static/images/student/%s'%(std_name+'.GIF')
+            Students.objects.filter(username = username).update(img = img)
             print img
             return render(request,'index.html')
         else:
             return HttpResponse("failed")
     else:
         form = Img_Form()
-    return render(request,'upload_img.html')
+    return render(request,'upload_img.html',{'std_name':std_name,'img':img})
 
 def Tch_Upload_Img(request,username):
     if request.COOKIES.get("tch_name",''):
         tch_name = request.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         print img
     else:
         img = ""
@@ -527,7 +547,7 @@ def Tch_Upload_Img(request,username):
             print request.FILES
             print f
             baseDir = os.path.dirname(os.path.abspath(__name__))
-            jpgdir = os.path.join(baseDir,'static','images','teacher')
+            jpgdir = os.path.join(baseDir,'collected_static','images','teacher')
             filename = os.path.join(jpgdir,username+'.GIF')
             fobj = open(filename,'wb')
             for chrunk in f.chunks():
@@ -536,7 +556,7 @@ def Tch_Upload_Img(request,username):
             imge = Image.open(filename)
             imge.thumbnail((45, 45), Image.ANTIALIAS)
             imge.save(filename,'GIF')
-            img = 'static/images/teacher/%s'%(username+'.GIF')
+            img = 'collected_static/images/teacher/%s'%(username+'.GIF')
             Teacher.objects.filter(username = tch_name).update(img = img)
             print img
             return render(request,'index.html')
@@ -549,7 +569,7 @@ def Tch_Upload_Img(request,username):
 def Tch_Detail(req):
     if req.COOKIES.get("tch_name",''):
         tch_name = req.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         print img
     else:
         img = ""
@@ -558,9 +578,8 @@ def Tch_Detail(req):
     #寻找所有的群组
     name = Teacher.objects.filter(username__exact = tch_name)[0].name
     chats_list = Chats.objects.filter(Teacher = name)
-    chats_list_ = [item.name for item in chats_list]
+    #chats_list_ = [item.name for item in chats_list]
     dict ={}
-    #dict = {'chat':{'student_name':[std_usrname,std_id],'student':[student_name,std_id]},'chat':{'student':[student_name,std_id],'student':[student_name,std_id]},}
     for chat in chats_list:
         std_chat_list = []
         print chat.name
@@ -575,14 +594,22 @@ def Tch_Detail(req):
 def Tch_Handler(req):
     if req.COOKIES.get("tch_name",''):
         tch_name = req.COOKIES.get("tch_name",'')
-        img ='/' +str(Teacher.objects.filter(username__exact = tch_name)[0].img)
+        img =str(Teacher.objects.filter(username__exact = tch_name)[0].img)
         print img
     else:
         img = ""
         tch_name = ''
     return render(req,'tch_handler.html',{'tch_name':tch_name,'img':img})
 
-
+def Std_Handler(req):
+    if req.COOKIES.get("std_name",''):
+        std_name = req.COOKIES.get("std_name",'')
+        img =str(Students.objects.filter(username__exact = std_name)[0].img)
+        print img
+    else:
+        img = ""
+        std_name = ''
+    return render(req,'std_handler.html',{'std_name':std_name,'img':img})
 
 
 
@@ -703,7 +730,7 @@ def S_Pub_Arri(req): #老师发布签到通知
                 #获取的表单数据与数据库进行比较
                 user = Teacher.objects.filter(name = teacher)[0]
                 if user:
-                    Advise.objects.create(title = title,Sign =sign,teacher = Teacher.objects.filter(name = teacher)[0],chats = chat,time = datetime.datetime.now())
+                    Advise.objects.create(title = title,Sign =sign,teacher = teacher,chats = chat,time = datetime.datetime.now())
                     return HttpResponse(json.dumps({'data':'True'}))
                 else:
                     return HttpResponse(json.dumps({'data':'False'}))
@@ -819,45 +846,45 @@ def S_Std_Arri(req): #学生签到
 
 @csrf_exempt
 def S_Print_Del_Arri(req): #老师打印签到情况
-    try:
-        if req.method == 'POST':
-            uf = PrintDelArriForm(req.POST)
-            if uf.is_valid():
-                #获取表单用户密码
-                title = uf.cleaned_data['title']
-                teacher = uf.cleaned_data['teacher']
-                chat = uf.cleaned_data['chat']
-                send_email = uf.cleaned_data['send_email']
-                #获取的表单数据与数据库进行比较
-                user = Teacher.objects.filter(name = teacher)[0]
-                if user:
-                    Arrivers = Arriver.objects.filter(user_id = Advise.objects.filter(teacher = Teacher.objects.filter(name=teacher)[0])[0].Sign,chats = chat)
-                    dir = os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))#+'\\Arriver.csv').replace("\\",'/')
-                    files = (os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))+'\\Arriver.csv').replace("\\",'/')
-                    if os.path.exists(dir):
-                        pass
-                    else:
-                        os.makedirs(dir)
-                    print dir
-                    csvfile = file(files, 'wb')
-                    writer = csv.writer(csvfile)
-                    #先写入columns_name
-                    writer.writerow(["学生姓名","群组","学号","签到时间","是否迟到","迟到理由"])
-                    for item in Arrivers:
-                        writer.writerow([str(item.std_name),str(item.chats),str(Students.objects.filter(name = item.std_name)[0].std_id),str(item.qiandao_datetime.strftime('%Y-%m-%d %H:%M:%S')),str(item.is_late),str(item.late_reason)])
-                        print item.std_name,item.chats,Students.objects.filter(name = item.std_name)[0].std_id,item.qiandao_datetime,item.is_late,item.late_reason
-                    csvfile.close()
-                    txt = str(Advise.objects.filter(title = title,teacher = Teacher.objects.filter(name=teacher)[0])[0].time.strftime('%Y-%m-%d %H:%M:%S')+chat+"签到情况").encode("utf-8")
-                    sendemail(send_email,files,txt,dir)
-                    Advise.objects.filter(title = title,teacher = Teacher.objects.filter(name=teacher)[0]).delete()
-                    Arrivers.delete()
-
-                    return HttpResponse(json.dumps({'data':'True'}))
+    # try:
+    if req.method == 'POST':
+        uf = PrintDelArriForm(req.POST)
+        if uf.is_valid():
+            #获取表单用户密码
+            title = uf.cleaned_data['title']
+            teacher = uf.cleaned_data['teacher']
+            chat = uf.cleaned_data['chat']
+            send_email = uf.cleaned_data['send_email']
+            #获取的表单数据与数据库进行比较
+            user = Teacher.objects.filter(name = teacher)[0]
+            if user:
+                Arrivers = Arriver.objects.filter(user_id = Advise.objects.filter(teacher = teacher)[0].Sign,chats = chat)
+                dir = os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))#+'\\Arriver.csv').replace("\\",'/')
+                files = (os.path.join(settings.BASE_DIR,'CSV_data',str(user.id))+'\\Arriver.csv').replace("\\",'/')
+                if os.path.exists(dir):
+                    pass
                 else:
-                    return HttpResponse(json.dumps({'data':'False'}))
-        else:
-            uf = PrintDelArriForm()
-        return HttpResponse(json.dumps({'data':'False'}))
-    except Exception :
-        print Exception.message
-        return HttpResponse(json.dumps({'data':'False'}))
+                    os.makedirs(dir)
+                print dir
+                csvfile = file(files, 'wb')
+                writer = csv.writer(csvfile)
+                #先写入columns_name
+                writer.writerow(["学生姓名","群组","学号","签到时间","是否迟到","迟到理由"])
+                for item in Arrivers:
+                    writer.writerow([str(item.std_name),str(item.chats),str(Students.objects.filter(name = item.std_name)[0].std_id),str(item.qiandao_datetime.strftime('%Y-%m-%d %H:%M:%S')),str(item.is_late),str(item.late_reason)])
+                    print item.std_name,item.chats,Students.objects.filter(name = item.std_name)[0].std_id,item.qiandao_datetime,item.is_late,item.late_reason
+                csvfile.close()
+                txt = str(Advise.objects.filter(title = title,teacher = teacher)[0].time.strftime('%Y-%m-%d %H:%M:%S')+chat+"签到情况").encode("utf-8")
+                sendemail(send_email,files,txt,dir)
+                Advise.objects.filter(title = title,teacher = teacher).delete()
+                Arrivers.delete()
+
+                return HttpResponse(json.dumps({'data':'True'}))
+            else:
+                return HttpResponse(json.dumps({'data':'False'}))
+    else:
+        uf = PrintDelArriForm()
+    return HttpResponse(json.dumps({'data':'False'}))
+    # except Exception :
+    #     print Exception.message
+    #     return HttpResponse(json.dumps({'data':'False'}))

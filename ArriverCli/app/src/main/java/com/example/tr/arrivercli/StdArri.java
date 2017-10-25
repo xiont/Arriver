@@ -61,8 +61,10 @@ public class StdArri extends AppCompatActivity implements View.OnClickListener{
                     Log.d("TeacherLogin", chats_);
                     FormBody formBody = new FormBody.Builder().add("user_id",user_id_).add("name", name_).add("std_name", std_name_).add("chats", chats_).add("late_reason",late_reason_).build();
                     OkHttpClient client = new OkHttpClient();
+                    String url0 = MainActivity.url + "/Student/Sstdarri/";
                     Request request = new Request.Builder()
-                            .url("http://104.225.157.237:8000/Student/Sstdarri/")
+                            .url(url0)
+                            //.url("http://104.225.157.237:8000/Student/Sstdarri/")
                             .post(formBody)
                             .build();
                     Response response = client.newCall(request).execute();

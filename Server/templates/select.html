@@ -1,57 +1,59 @@
 {% extends "base.html" %}
 {% block body %}
-   <div class="row">
+    <div class="row">
 
-              <div style="height: 100px;width: 400px;font-size: 50px;margin-left: 37%;margin-top: 3%;">
-                    <div id="carousel-example" class="carousel slide slide-bdr" data-ride="carousel" style="border-color: transparent;">
+        <div style="height: 50%;width: 50%;font-size: 50px;margin-left: 25%;margin-top: 3%;">
+            <div id="carousel-example" class="carousel slide slide-bdr" data-ride="carousel" style="border-color: transparent;">
 
-                    <div class="carousel-inner">
-                        <div class="item next left">
+                <div class="carousel-inner">
+                    <div class="item next left">
 
-                            <img src="/static/img/1.jpg" alt="">
+                        <img src="/static/img/1.jpg" alt="">
 
-                        </div>
-                        <div class="item">
-                            <img src="/static/img/2.jpg" alt="">
-
-                        </div>
-                        <div class="item active left">
-                            <img src="/static/img/3.jpg" alt="">
-
-                        </div>
                     </div>
-                    <!--INDICATORS-->
-                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example" data-slide-to="1" class=""></li>
-                        <li data-target="#carousel-example" data-slide-to="2" class=""></li>
-                    </ol>
-                    <!--PREVIUS-NEXT BUTTONS-->
-                     <a class="left carousel-control" href="#carousel-example" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
+                    <div class="item">
+                        <img src="/static/img/2.jpg" alt="">
+
+                    </div>
+                    <div class="item active left">
+                        <img src="/static/img/3.jpg" alt="">
+
+                    </div>
                 </div>
-              </div>
+                <!--INDICATORS-->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example" data-slide-to="1" class=""></li>
+                    <li data-target="#carousel-example" data-slide-to="2" class=""></li>
+                </ol>
+                <!--PREVIUS-NEXT BUTTONS-->
+                <a class="left carousel-control" href="#carousel-example" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
 
-                 </div>
+    </div>
+    <div style="margin-left: 25%;">
     {%  if std_name %}
-    <a href="../Student/login" class="btn btn-primary btn-lg" style="height: 100px;width: 400px;font-size: 50px;margin-left: 37%;margin-top: 12%;">I 'm A Student</a>
+        <a href="../Student/handler" class="btn btn-primary btn-lg" style="height: 10%;width: 30%;font-size: 50px;margin-top: 5%;">I 'm A Student</a>
     {% else %}
-        <a href="../Student/login" class="btn btn-primary btn-lg" style="height: 100px;width: 400px;font-size: 50px;margin-left: 37%;margin-top: 12%;">I 'm A Student</a>
+        <a href="../Student/login" class="btn btn-primary btn-lg" style="height: 10%;width: 30%;font-size: 50px;margin-top: 5%;">I 'm A Student</a>
     {% endif %}
-
     {%  if tch_name %}
-    <a href="../Teacher/handler" class="btn btn-success btn-lg" style="height: 100px;width: 400px;font-size: 50px;margin-left: 37%;margin-top: 2%;">I 'm A Teacher</a>
+        <a href="../Teacher/handler" class="btn btn-success btn-lg" style="height: 10%;width: 30%;font-size: 50px;margin-top: 5%;">I 'm A Teacher</a>
     {% else %}
-        <a href="../Teacher/login" class="btn btn-success btn-lg" style="height: 100px;width: 400px;font-size: 50px;margin-left: 37%;margin-top: 2%;">I 'm A Teacher</a>
+        <a href="../Teacher/login" class="btn btn-success btn-lg" style="height: 10%;width: 30%;font-size: 50px;margin-left: 6%;margin-top: 5%;">I 'm A Teacher</a>
     {% endif %}
+    </div>
+
 
     <script src="/static/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="/static/js/bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
+    <!-- CUSTOM SCRIPTS  -->
     <script src="/static/js/custom.js"></script>
 {% endblock %}

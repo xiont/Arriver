@@ -1,5 +1,6 @@
 package com.example.tr.arrivercli;
 
+import com.example.tr.arrivercli.MainActivity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -59,8 +60,10 @@ public class AddChat extends AppCompatActivity implements View.OnClickListener{
                     Log.d("TeacherLogin", teacher_);
                     FormBody formBody = new FormBody.Builder().add("chat_name", chat_name_).add("std_name", std_name_).add("username", username_).add("teacher", teacher_).build();
                     OkHttpClient client = new OkHttpClient();
+                    String url0 = (MainActivity.url) + "/Student/Saddchat/";
                     Request request = new Request.Builder()
-                            .url("http://104.225.157.237:8000/Student/Saddchat/")
+                            .url(url0)
+                            //.url("http://104.225.157.237:8000/Student/Saddchat/")
                             .post(formBody)
                             .build();
                     Response response = client.newCall(request).execute();

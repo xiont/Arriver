@@ -60,8 +60,10 @@ public class CreChat extends AppCompatActivity implements View.OnClickListener{
                     Log.d("TeacherLogin", teacher_);
                     FormBody formBody = new FormBody.Builder().add("name", name_).add("teacher", teacher_).add("passwd", passwd_).add("advise", advise_).build();
                     OkHttpClient client = new OkHttpClient();
+                    String url0 = MainActivity.url + "/Teacher/Screchat/";
                     Request request = new Request.Builder()
-                            .url("http://104.225.157.237:8000/Teacher/Screchat/")
+                            .url(url0)
+                            //.url("http://104.225.157.237:8000/Teacher/Screchat/")
                             .post(formBody)
                             .build();
                     Response response = client.newCall(request).execute();

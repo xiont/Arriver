@@ -2,7 +2,8 @@ from django.conf.urls import url
 import views
 
 urlpatterns = [
-    url(r'^index/$', views.index),
+    url(r'^$', views.Select),
+    url(r'^index/$', views.Select),
     url(r'^Student/regist/$', views.Std_Reg),
     url(r'^Teacher/regist/$', views.Tch_Reg),
     url(r'^Student/login/$', views.Std_Log),
@@ -16,11 +17,11 @@ urlpatterns = [
     url(r'^json/$', views.JsonTest),
     url(r'^blank/$',views.blank),
     url(r'^select/$',views.Select),
-    url(r'^Student/uploadimg/(?P<user_id>\w+)/',views.Std_Upload_Img),
+    url(r'^Student/uploadimg/(?P<username>\w+)/',views.Std_Upload_Img),
     url(r'^Teacher/uploadimg/(?P<username>\w+)/',views.Tch_Upload_Img),
     url(r'^Teacher/detail/$',views.Tch_Detail),
     url(r'^Teacher/handler/$',views.Tch_Handler),
-
+    url(r'^Student/handler/$',views.Std_Handler),
 
 
     url(r'^Teacher/Slogin/$', views.S_Tch_Log),

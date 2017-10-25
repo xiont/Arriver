@@ -1,19 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>学生签到</title>
-</head>
+{% extends "std_base.html" %}
+{% block body %}
 
-<body>
-<h1>学生签到：</h1>
-<form method = 'post' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{uf.as_p}}
-    <input type="submit" value = "ok" />
-</form>
-<br>
-<a href="/login/">登陆</a>
-</body>
-</html>
+    <div style="margin-left: 37%;margin-top:5%;width: 400px;">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center;font-size: 30px;">
+                学生用户签到
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>标识符</label>
+                        <input class="form-control" type="text" name="user_id" required="required"/>
+                        <p class="help-block">请填写群组标识符</p>
+                    </div>
+                    <div class="form-group">
+                        <label>签到标签</label>
+                        <select class="form-control"  name="name" type="text" required="required">
+                            {% for item in advises %}
+                                <option>{{ item }}</option>
+                            {% endfor %}
+                        </select>
+                       <p class="help-block">请输入签到的标题</p>
+                    </div>
+                     <div class="form-group">
+                        <label>学生名字</label>
+                        <input class="form-control"  name="std_name" type="text" required="required" value="{{ student_name }}"/>
+                       <p class="help-block">请输入签到学生名字</p>
+                    </div>
+                     <div class="form-group">
+                        <label>签到群组</label>
+                        <select  class="form-control"  name="chats" type="text" required="required">
+                            {% for item in chats %}
+                                <option>{{ item }}</option>
+                            {% endfor %}
+                        </select>
+                       <p class="help-block">请输入签到的群组</p>
+                    </div>
+                     <div class="form-group">
+                        <label>迟到理由</label>
+                        <input class="form-control"  name="late_reason" type="text" required="required"/>
+                       <p class="help-block">请输入迟到理由，没有则填无</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-info" style="width: 170px;">签到 </button>
+                    <button  class="btn btn-info" style="margin-left:20px;width: 170px;" id = "button">返回</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function(){
+            var button = $("#button");
+            button.click(function(){
+                setTimeout('jumpurl()',1);
+            });
+        });
+        function jumpurl(){
+            location='/Student/handler/';
+        }
+    </script>
+{% endblock %}
+
+{##}
+{#<form method="post" enctype="multipart/form-data">#}
+{#    <input type="hidden" name="csrfmiddlewaretoken" value="9vpGVm5axYP1TMk1CF2MNvZXv6vs1Ry4GvXv8Wbz7MiD9qnOQJAuXtvVmPrjbsyL">#}
+{#    <p><label for="id_user_id">标识符:</label> <input id="id_user_id" name="user_id" type="number" required=""></p>#}
+{#<p><label for="id_name">签到标签:</label> <input id="id_name" maxlength="60" name="name" type="text" required=""></p>#}
+{#<p><label for="id_std_name">学生名字:</label> <input id="id_std_name" maxlength="60" name="std_name" type="text" required=""></p>#}
+{#<p><label for="id_chats">签到群组:</label> <input id="id_chats" maxlength="60" name="chats" type="text" required=""></p>#}
+{#<p><label for="id_late_reason">迟到理由:</label> <input id="id_late_reason" maxlength="60" name="late_reason" type="text" required=""></p>#}
+{#    <input type="submit" value="ok">#}
+{#</form>#}

@@ -61,8 +61,10 @@ public class PubArri extends AppCompatActivity implements View.OnClickListener{
                     Log.d("TeacherLogin", teacher_);
                     FormBody formBody = new FormBody.Builder().add("title", title_).add("chat", chat_).add("teacher", teacher_).add("sign", sign_).build();
                     OkHttpClient client = new OkHttpClient();
+                    String url0 = MainActivity.url + "/Teacher/Spuarri/";
                     Request request = new Request.Builder()
-                            .url("http://104.225.157.237:8000/Teacher/Spuarri/")
+                            .url(url0)
+                            //.url("http://104.225.157.237:8000/Teacher/Spuarri/")
                             .post(formBody)
                             .build();
                     Response response = client.newCall(request).execute();

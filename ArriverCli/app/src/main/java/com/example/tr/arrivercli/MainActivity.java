@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    public String url = "http://104.225.157.237:8000";
+    //public String url = "http://104.225.157.237:8000";
+    public static String url = "http://192.168.43.96:8000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

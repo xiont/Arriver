@@ -136,5 +136,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 # 如果不想用 STATICFILES_DIRS 可以不用，都放在 app 里的 static 中也可以
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'templates/../static').replace('\\', '/'),
-    os.path.join(STATIC_ROOT,'upload').replace('\\','/'),
+    #os.path.join(BASE_DIR, 'templates/../collected_static').replace('\\', '/'),
+    #os.path.join(STATIC_ROOT,'upload').replace('\\','/'),
 )
+
+
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '1018589158@qq.com'
+EMAIL_HOST_PASSWORD = 'xneipegwmzvcbbad'
+EMAIL_USE_TLS = True

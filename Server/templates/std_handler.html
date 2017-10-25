@@ -1,0 +1,27 @@
+{% extends "std_base.html" %}
+{% block body %}
+    <div style="width: 50%;margin-left: 23%; margin-top: 2%;background-color: #FFFFFF;padding: 100px 20px 100px 20px;">
+<div class="row" >
+
+                 <div class="col-md-3 col-sm-3 col-xs-6" style="width: 50%;" onclick="location='/Student/addchat/'">
+                      <div class="alert alert-info back-widget-set text-center">
+                            <i class="fa fa-history fa-5x"></i>
+                            <h3>加入群组&nbsp;</h3>
+                           加入一个教学班的群组
+                        </div>
+                    </div>
+
+              <div class="col-md-3 col-sm-3 col-xs-6"  style="width: 50%;" onclick="location='/Student/stdarri/'">
+                      <div class="alert alert-success back-widget-set text-center">
+                            <i class="fa fa-bars fa-5x"></i>
+                            <h3>及时签到</h3>
+                            及时完成老师发布的签到
+                        </div>
+                    </div>
+
+
+
+        </div>
+
+    </div>
+{% endblock %}

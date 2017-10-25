@@ -1,19 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>加入群组</title>
-</head>
+{% extends "std_base.html" %}
+{% block body %}
 
-<body>
-<h1>加入群组：</h1>
-<form method = 'post' enctype="multipart/form-data">
-    {% csrf_token %}
-    {{uf.as_p}}
-    <input type="submit" value = "ok" />
-</form>
-<br>
-<a href="/login/">登陆</a>
-</body>
-</html>
+    <div style="margin-left: 37%;margin-top:5%;width: 400px;">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center;font-size: 30px;">
+                学生用户加入群组
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>输入群组名</label>
+                        <input class="form-control" type="text" name="chat_name" required="required">
+                        <p class="help-block">请填写要加入群组的名字.</p>
+                    </div>
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input class="form-control"  name="std_name" type="text" required="required"/>
+                       <p class="help-block">请输入你的姓名</p>
+                    </div>
+                     <div class="form-group">
+                        <label>老师</label>
+                        <input class="form-control"  name="teacher" type="text" required="required"/>
+                       <p class="help-block">请输入群组的老师</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-info" style="width: 170px;">加入 </button>
+                    <button  class="btn btn-info" style="margin-left:20px;width: 170px;" id = "button">返回</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function(){
+            var button = $("#button");
+            button.click(function(){
+                setTimeout('jumpurl()',1);
+            });
+        });
+        function jumpurl(){
+            location='/Student/handler/';
+        }
+    </script>
+{% endblock %}
+
+
+
+{#<form method="post" enctype="multipart/form-data">#}
+{#    <input type="hidden" name="csrfmiddlewaretoken" value="8xrF5k9GrdqE1WOuzL5Kd71wqdUaXMBLFxZuiUf511TghARhNPDsn5xuhWQ17nBs">#}
+{#    <p><label for="id_chat_name">群组名:</label> <input id="id_chat_name" maxlength="100" name="chat_name" type="text" required=""></p>#}
+{#<p><label for="id_std_name">名字:</label> <input id="id_std_name" maxlength="100" name="std_name" type="text" required=""></p>#}
+{#<p><label for="id_teacher">老师:</label> <input id="id_teacher" maxlength="100" name="teacher" type="text" required=""></p>#}
+{#    <input type="submit" value="ok">#}
+{#</form>#}
